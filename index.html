@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Human Survival Roadmap — Age of Commodity Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500;600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0a0a0c;
+    --bg-secondary: #111116;
+    --bg-tertiary: #18181f;
+    --bg-card: #1a1a22;
+    --border: #2a2a35;
+    --border-active: #4a4a5a;
+    --text-primary: #e8e6e1;
+    --text-secondary: #9a9890;
+    --text-dim: #5a5a55;
+    --accent-gold: #c9a227;
+    --accent-gold-dim: rgba(201, 162, 39, 0.15);
+    --accent-gold-glow: rgba(201, 162, 39, 0.08);
+    --accent-red: #c44b4b;
+    --accent-red-dim: rgba(196, 75, 75, 0.12);
+    --accent-green: #4b9c6b;
+    --accent-green-dim: rgba(75, 156, 107, 0.12);
+    --accent-blue: #4b7cc4;
+    --accent-blue-dim: rgba(75, 124, 196, 0.12);
+    --accent-purple: #8b6cc4;
+    --accent-purple-dim: rgba(139, 108, 196, 0.12);
+    --font-display: 'Instrument Serif', Georgia, serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    --font-body: 'DM Sans', sans-serif;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) var(--bg-primary);
+  }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.7;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ========== NOISE OVERLAY ========== */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ========== SCROLL PROGRESS ========== */
+  #progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-gold), var(--accent-purple));
+    z-index: 1000;
+    transition: width 0.1s linear;
+  }
+
+  /* ========== NAV ========== */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10, 10, 12, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(42, 42, 53, 0.4);
+    transform: translateY(-100%);
+    animation: slideDown 0.8s var(--ease-out) 0.5s forwards;
+  }
+
+  @keyframes slideDown {
+    to { transform: translateY(0); }
+  }
+
+  .nav-logo {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    font-weight: 500;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent-gold);
+    transition: width 0.3s var(--ease-out);
+  }
+
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ========== HERO ========== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem 2rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s var(--ease-out) 0.8s forwards;
+  }
+
+  .hero-eyebrow span {
+    display: inline-block;
+    padding: 0.3em 0.8em;
+    border: 1px solid rgba(201, 162, 39, 0.3);
+    border-radius: 2px;
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    line-height: 1.05;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s var(--ease-out) 1s forwards;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent-gold);
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 720px;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 1s var(--ease-out) 1.2s forwards;
+    font-weight: 300;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 3rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    opacity: 0;
+    animation: fadeUp 1s var(--ease-out) 1.4s forwards;
+  }
+
+  .hero-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .hero-meta-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .hero-meta-value {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    color: var(--text-primary);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ========== MAIN CONTENT WRAPPER ========== */
+  .content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* ========== SECTION COMMON ========== */
+  section {
+    padding: 6rem 0;
+    position: relative;
+  }
+
+  section + section {
+    border-top: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent-gold);
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+  }
+
+  .section-intro {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    max-width: 720px;
+    margin-bottom: 3rem;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* ========== EXPERT TAKE CALLOUT ========== */
+  .expert-take {
+    border-left: 2px solid var(--accent-gold);
+    padding: 1.5rem 2rem;
+    margin: 2.5rem 0;
+    background: var(--accent-gold-glow);
+    border-radius: 0 6px 6px 0;
+    position: relative;
+  }
+
+  .expert-take::before {
+    content: 'ANALYST NOTE';
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--accent-gold);
+    position: absolute;
+    top: -0.6em;
+    left: 2rem;
+    background: var(--bg-primary);
+    padding: 0 0.5rem;
+  }
+
+  .expert-take p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    font-style: italic;
+  }
+
+  /* ========== CORE PREMISE ========== */
+  .premise-block {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 3rem;
+    margin-bottom: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .premise-block::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, var(--accent-gold-dim) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .premise-block blockquote {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1.5;
+    color: var(--text-primary);
+    position: relative;
+    z-index: 1;
+  }
+
+  .premise-block blockquote em { color: var(--accent-gold); font-style: italic; }
+
+  /* ========== TIMELINE ========== */
+  .timeline {
+    position: relative;
+    padding-left: 3rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent-gold), var(--accent-purple), transparent);
+  }
+
+  .timeline-node {
+    position: relative;
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(42, 42, 53, 0.4);
+  }
+
+  .timeline-node:last-child { border-bottom: none; margin-bottom: 0; }
+
+  .timeline-node::before {
+    content: '';
+    position: absolute;
+    left: -3rem;
+    top: 0.5rem;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: 2px solid var(--accent-gold);
+    background: var(--bg-primary);
+    transform: translateX(-4px);
+  }
+
+  .timeline-year {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-gold);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .timeline-heading {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    font-weight: 400;
+  }
+
+  .timeline-body {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .timeline-body strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .displacement-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.2rem;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.35em 0.8em;
+    border-radius: 3px;
+    border: 1px solid;
+  }
+
+  .tag--danger {
+    color: var(--accent-red);
+    border-color: rgba(196, 75, 75, 0.3);
+    background: var(--accent-red-dim);
+  }
+
+  .tag--warning {
+    color: var(--accent-gold);
+    border-color: rgba(201, 162, 39, 0.3);
+    background: var(--accent-gold-dim);
+  }
+
+  .tag--safe {
+    color: var(--accent-green);
+    border-color: rgba(75, 156, 107, 0.3);
+    background: var(--accent-green-dim);
+  }
+
+  /* ========== PREMIUM CARDS ========== */
+  .premium-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .premium-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.4s, transform 0.4s var(--ease-out);
+  }
+
+  .premium-card:hover {
+    border-color: var(--border-active);
+    transform: translateY(-2px);
+  }
+
+  .premium-card-header {
+    padding: 2rem 2rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .premium-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .premium-card[data-cat="discernment"] .premium-card-icon {
+    background: var(--accent-red-dim);
+    border: 1px solid rgba(196, 75, 75, 0.2);
+  }
+  .premium-card[data-cat="empathy"] .premium-card-icon {
+    background: var(--accent-blue-dim);
+    border: 1px solid rgba(75, 124, 196, 0.2);
+  }
+  .premium-card[data-cat="physical"] .premium-card-icon {
+    background: var(--accent-green-dim);
+    border: 1px solid rgba(75, 156, 107, 0.2);
+  }
+  .premium-card[data-cat="taste"] .premium-card-icon {
+    background: var(--accent-purple-dim);
+    border: 1px solid rgba(139, 108, 196, 0.2);
+  }
+
+  .premium-card-toggle {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--text-dim);
+    transition: transform 0.3s var(--ease-out), color 0.3s;
+    line-height: 1;
+    margin-top: 0.3rem;
+  }
+
+  .premium-card.expanded .premium-card-toggle {
+    transform: rotate(45deg);
+    color: var(--accent-gold);
+  }
+
+  .premium-card-title-block { flex: 1; margin-left: 1rem; }
+
+  .premium-card-title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    margin-bottom: 0.3rem;
+    font-weight: 400;
+  }
+
+  .premium-card-subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .premium-card-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s var(--ease-out), padding 0.4s;
+  }
+
+  .premium-card.expanded .premium-card-body {
+    max-height: 800px;
+    padding: 0 2rem 2rem;
+  }
+
+  .premium-card-body p {
+    color: var(--text-secondary);
+    font-size: 0.93rem;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    font-weight: 300;
+  }
+
+  .premium-card-body p:last-child { margin-bottom: 0; }
+
+  .premium-examples {
+    background: rgba(255,255,255,0.02);
+    border-radius: 6px;
+    padding: 1.2rem 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .premium-examples h4 {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.8rem;
+  }
+
+  .premium-examples li {
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    margin-bottom: 0.4rem;
+    padding-left: 1rem;
+    position: relative;
+    list-style: none;
+    line-height: 1.6;
+  }
+
+  .premium-examples li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--text-dim);
+    font-size: 0.8rem;
+  }
+
+  /* ========== COMPARISON TABLE ========== */
+  .comparison-wrapper {
+    overflow-x: auto;
+    margin: 2rem 0;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    min-width: 700px;
+  }
+
+  .comparison-table thead th {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 1.2rem 1.5rem;
+    text-align: left;
+    background: var(--bg-tertiary);
+    border-bottom: 1px solid var(--border);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .comparison-table thead th:first-child {
+    border-right: 1px solid var(--border);
+    width: 100px;
+  }
+
+  .comparison-table tbody td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(42, 42, 53, 0.4);
+    vertical-align: top;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  .comparison-table tbody td:first-child {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent-gold);
+    border-right: 1px solid var(--border);
+    white-space: nowrap;
+    background: var(--bg-secondary);
+  }
+
+  .comparison-table tbody tr:last-child td { border-bottom: none; }
+
+  .val-down { color: var(--accent-red); }
+  .val-up { color: var(--accent-green); }
+  .val-flat { color: var(--text-dim); }
+
+  .bar-cell {
+    position: relative;
+  }
+
+  .bar-visual {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 4px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 1.5s var(--ease-out);
+  }
+
+  .bar-fill--red { background: var(--accent-red); }
+  .bar-fill--green { background: var(--accent-green); }
+
+  .bar-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    min-width: 30px;
+    text-align: right;
+  }
+
+  /* ========== AGENTIC SECTION ========== */
+  .agentic-traits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .trait-item {
+    padding: 1.5rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition: border-color 0.3s;
+  }
+
+  .trait-item:hover { border-color: var(--border-active); }
+
+  .trait-number {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--accent-gold);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.8rem;
+  }
+
+  .trait-name {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+  }
+
+  .trait-desc {
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ========== CONTRARIAN SECTION ========== */
+  .contrarian-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    counter-reset: contrarian;
+  }
+
+  .contrarian-item {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 1.5rem;
+    padding: 2rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: border-color 0.3s;
+    counter-increment: contrarian;
+  }
+
+  .contrarian-item:hover { border-color: var(--border-active); }
+
+  .contrarian-num {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: var(--accent-gold);
+    line-height: 1;
+    opacity: 0.4;
+  }
+
+  .contrarian-num::before {
+    content: counter(contrarian, decimal-leading-zero);
+  }
+
+  .contrarian-content h3 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    margin-bottom: 0.3rem;
+    font-weight: 400;
+  }
+
+  .contrarian-content .contrarian-hook {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+
+  .contrarian-content p {
+    color: var(--text-secondary);
+    font-size: 0.93rem;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* ========== FOOTER ========== */
+  footer {
+    padding: 4rem 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  footer p {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    line-height: 2.2;
+  }
+
+  /* ========== SCROLL REVEAL ========== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 768px) {
+    .hero { padding: 5rem 1.5rem 3rem; }
+    .content-wrapper { padding: 0 1.5rem; }
+    .hero-meta { flex-direction: column; gap: 1.5rem; }
+    .nav-links { display: none; }
+    .premium-grid { grid-template-columns: 1fr; }
+    .premise-block { padding: 2rem; }
+    .contrarian-item { grid-template-columns: 1fr; }
+    .contrarian-num { display: none; }
+    section { padding: 4rem 0; }
+    .timeline { padding-left: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav>
+  <div class="nav-logo">Human Survival Roadmap</div>
+  <ul class="nav-links">
+    <li><a href="#premise">Premise</a></li>
+    <li><a href="#timeline">Displacement</a></li>
+    <li><a href="#premium">Human Premium</a></li>
+    <li><a href="#comparison">Value Shift</a></li>
+    <li><a href="#agentic">Agentic Self</a></li>
+    <li><a href="#contrarian">Contrarian</a></li>
+  </ul>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<header class="hero">
+  <div class="hero-eyebrow"><span>Foresight Analysis — 2026–2056</span></div>
+  <h1>What Humans Are <em>For</em><br>After Intelligence Is Free</h1>
+  <p class="hero-sub">
+    When every person on Earth can summon world-class analysis, coding, writing, and synthesis at the press of a button, the question stops being "what can I produce?" and becomes "what should exist?" This is the definitive roadmap for navigating that shift.
+  </p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Horizon</span>
+      <span class="hero-meta-value">30 Years</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Framework</span>
+      <span class="hero-meta-value">Multi-Horizon</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Core Thesis</span>
+      <span class="hero-meta-value">Production → Direction</span>
+    </div>
+  </div>
+</header>
+
+<div class="content-wrapper">
+
+  <!-- ==================== CORE PREMISE ==================== -->
+  <section id="premise">
+    <div class="section-label">Section 00 — Core Premise</div>
+    <div class="premise-block reveal">
+      <blockquote>
+        If <em>intelligence</em> — logic, coding, synthesis, data analysis, and creative drafting — becomes a utility like electricity, available to everyone at near-zero marginal cost, then human value must shift from <em>production</em> to <em>direction, discernment, and embodiment</em>.
+      </blockquote>
+    </div>
+
+    <div class="expert-take reveal">
+      <p>
+        Here's what most people get wrong about this transition: they think the shift is from "doing" to "thinking." It's not. AI already thinks. The real shift is from thinking to <strong>caring</strong> — to having stakes, having skin in the game, having a body and a community and something to lose. The economic premium is moving from the head to the gut. Intelligence becomes infrastructure; judgment becomes the product. And judgment requires something AI fundamentally lacks: a life that is affected by the outcome.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== SKILL DISPLACEMENT TIMELINE ==================== -->
+  <section id="timeline">
+    <div class="section-label">Section 01 — Skill Displacement Timeline</div>
+    <h2 class="section-title reveal">The Cascade of<br>Commoditization</h2>
+    <p class="section-intro reveal">
+      Skills don't disappear overnight. They decay in market value gradually, then suddenly. Here's the wave pattern we're tracking.
+    </p>
+
+    <div class="timeline reveal">
+
+      <div class="timeline-node">
+        <div class="timeline-year">2026–2030 · The First Wave</div>
+        <h3 class="timeline-heading">The "Currently Safe" Illusion</h3>
+        <div class="timeline-body">
+          <p>
+            The skills most at risk are the ones whose practitioners currently feel safest — <strong>junior knowledge work</strong> that relies on synthesizing existing information into structured outputs. Think entry-level legal research, financial report generation, first-draft marketing copy, standard software feature development, and data-to-slide pipeline work.
+          </p>
+          <p style="margin-top:1rem;">
+            <strong>The critical nuance:</strong> These roles don't vanish — they compress. Where a team of five junior analysts once produced a quarterly report, one senior analyst directing AI agents does it in an afternoon. The <em>bottleneck</em> moves from "can we produce this?" to "is this the right thing to produce?"
+          </p>
+          <p style="margin-top:1rem;">
+            Also falling fast: <strong>routine translation, basic tutoring, Tier 1 customer support, standard UI/UX wireframing, boilerplate code,</strong> and any work that can be fully specified in a prompt. If the quality bar is "good enough," AI is already there.
+          </p>
+        </div>
+        <div class="displacement-tags">
+          <span class="tag tag--danger">Junior Legal Research</span>
+          <span class="tag tag--danger">Boilerplate Code</span>
+          <span class="tag tag--danger">First-Draft Copy</span>
+          <span class="tag tag--warning">Data Analysis</span>
+          <span class="tag tag--warning">Standard Design</span>
+          <span class="tag tag--safe">Senior Strategy</span>
+        </div>
+      </div>
+
+      <div class="timeline-node">
+        <div class="timeline-year">2031–2040 · The Deep Displacement</div>
+        <h3 class="timeline-heading">The Professional Class Reckoning</h3>
+        <div class="timeline-body">
+          <p>
+            This is the decade when AI transitions from "tool" to "agent" to "ecosystem" — and it restructures the professional class. <strong>Middle management</strong> is the hardest hit category in any economy. The role of the middle manager is fundamentally about information routing: gathering status from below, synthesizing it, and reporting up. AI agent networks will do this continuously, in real-time, with zero political distortion.
+          </p>
+          <p style="margin-top:1rem;">
+            <strong>Medicine</strong> splits: diagnostic and treatment-protocol work becomes heavily AI-augmented (radiology, dermatology, pathology leading the way), while procedural medicine, patient relationship management, and crisis care retain human centrality. <strong>Law</strong> restructures: contract review, compliance checking, and case research are fully automated, but courtroom advocacy, negotiation, and ethical judgment remain human-dominated. <strong>Engineering</strong> shifts: the design-to-specification pipeline accelerates 10×, but systems-of-systems architecture and cross-domain judgment become more valuable than ever.
+          </p>
+          <p style="margin-top:1rem;">
+            The survivors share one trait: <strong>they operate where ambiguity is high and consequences are irreversible</strong>.
+          </p>
+        </div>
+        <div class="displacement-tags">
+          <span class="tag tag--danger">Middle Management</span>
+          <span class="tag tag--danger">Contract Law</span>
+          <span class="tag tag--danger">Diagnostic Radiology</span>
+          <span class="tag tag--warning">Software Eng (Standard)</span>
+          <span class="tag tag--warning">Financial Advisory</span>
+          <span class="tag tag--safe">Crisis Medicine</span>
+          <span class="tag tag--safe">Trial Advocacy</span>
+        </div>
+      </div>
+
+      <div class="timeline-node">
+        <div class="timeline-year">2046–2056 · The Post-Labor Horizon</div>
+        <h3 class="timeline-heading">Redefining Human "Utility"</h3>
+        <div class="timeline-body">
+          <p>
+            In a potential post-labor economy, the word "utility" itself transforms. If automated systems can produce any good or service at near-zero marginal cost, human value is no longer economic in the traditional sense. What remains are three irreducible pillars:
+          </p>
+          <p style="margin-top:1rem;">
+            <strong>1. Legitimacy & Accountability.</strong> Societies will still need humans to make binding decisions — not because AI can't decide, but because someone must be accountable when things go wrong. A robot surgeon can operate; only a human can stand trial. Governance, ethics, and judicial authority remain inherently human.
+          </p>
+          <p style="margin-top:1rem;">
+            <strong>2. Meaning-Making.</strong> Humans don't just consume — they need to <em>matter</em>. The creative arts, spiritual practice, caregiving, community building, mentorship, and cultural curation become the primary "industries." The economy of attention is replaced by the economy of meaning.
+          </p>
+          <p style="margin-top:1rem;">
+            <strong>3. The Experience Economy.</strong> Human-made, human-delivered, human-present experiences command a premium precisely because they are scarce and authentic. The handmade, the in-person, the unrepeatable — these become luxury categories.
+          </p>
+        </div>
+        <div class="displacement-tags">
+          <span class="tag tag--safe">Governance & Ethics</span>
+          <span class="tag tag--safe">Creative Arts</span>
+          <span class="tag tag--safe">Caregiving</span>
+          <span class="tag tag--safe">Handcraft</span>
+          <span class="tag tag--warning">Most Knowledge Work</span>
+          <span class="tag tag--danger">Routine Cognitive Labor</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="expert-take reveal">
+      <p>
+        The timeline most people imagine is too slow in the near term and too dramatic in the long term. AI won't replace your job in 2027 — it'll hollow it out, leaving you with less leverage in salary negotiations while the job title persists unchanged. And by 2050, we likely won't have "post-labor" utopia or dystopia — we'll have a messy middle where economic structures lag decades behind technical capability, as they always do. Plan for the transition, not the destination.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== THE HUMAN PREMIUM ==================== -->
+  <section id="premium">
+    <div class="section-label">Section 02 — The Human Premium</div>
+    <h2 class="section-title reveal">Four Categories of<br>Irreplaceable Value</h2>
+    <p class="section-intro reveal">
+      These are the domains where human involvement isn't just preferred — it's structurally necessary. Click each category to explore.
+    </p>
+
+    <div class="premium-grid reveal">
+
+      <div class="premium-card" data-cat="discernment" onclick="toggleCard(this)">
+        <div class="premium-card-header">
+          <div class="premium-card-icon">⚖️</div>
+          <div class="premium-card-title-block">
+            <div class="premium-card-title">High-Stakes Discernment</div>
+            <div class="premium-card-subtitle">Where the cost of being wrong is catastrophic</div>
+          </div>
+          <div class="premium-card-toggle">+</div>
+        </div>
+        <div class="premium-card-body">
+          <p>
+            AI can model risk beautifully — but it cannot <em>bear</em> risk. The fundamental gap isn't analytical; it's existential. When a CEO decides to bet the company on a pivot, when a surgeon chooses to operate versus palliative care, when a general commits troops — these decisions require someone with skin in the game.
+          </p>
+          <p>
+            This isn't about AI being wrong more often. It's about accountability being a structural requirement of civilisation. We need a named human who will face consequences. This creates an irreducible demand for human judgment at the top of every high-stakes decision chain.
+          </p>
+          <div class="premium-examples">
+            <h4>Examples of Enduring Roles</h4>
+            <li>Crisis leadership (military, medical, political)</li>
+            <li>Ethical review boards and judicial decision-making</li>
+            <li>Venture capital and high-stakes capital allocation</li>
+            <li>Diplomatic negotiation under nuclear/existential risk</li>
+            <li>Safety-critical systems certification (final sign-off)</li>
+          </div>
+        </div>
+      </div>
+
+      <div class="premium-card" data-cat="empathy" onclick="toggleCard(this)">
+        <div class="premium-card-header">
+          <div class="premium-card-icon">🤝</div>
+          <div class="premium-card-title-block">
+            <div class="premium-card-title">Complex Empathy & Connection</div>
+            <div class="premium-card-subtitle">The therapeutic element of all services</div>
+          </div>
+          <div class="premium-card-toggle">+</div>
+        </div>
+        <div class="premium-card-body">
+          <p>
+            Every service has a "therapeutic layer" — the part where the human customer isn't just seeking a solution, they're seeking to be <em>understood</em>. A financial advisor isn't just optimising portfolios; they're managing a client's anxiety about their children's future. A doctor isn't just diagnosing; they're helping a patient process mortality.
+          </p>
+          <p>
+            AI will get extraordinarily good at simulating empathy. But "this entity genuinely understands what it means to suffer, and is choosing to sit with me in my pain" is something humans can offer that AI structurally cannot. The premium isn't on the information — it's on the <em>witness</em>.
+          </p>
+          <div class="premium-examples">
+            <h4>Examples of Enduring Roles</h4>
+            <li>Psychotherapy and grief counselling</li>
+            <li>Palliative and end-of-life care</li>
+            <li>High-conflict mediation (divorce, custody, labour)</li>
+            <li>Executive coaching and leadership development</li>
+            <li>Community organising and grassroots leadership</li>
+          </div>
+        </div>
+      </div>
+
+      <div class="premium-card" data-cat="physical" onclick="toggleCard(this)">
+        <div class="premium-card-header">
+          <div class="premium-card-icon">🔧</div>
+          <div class="premium-card-title-block">
+            <div class="premium-card-title">Physicality & The Analog Moat</div>
+            <div class="premium-card-subtitle">The stubborn reality of atoms over bits</div>
+          </div>
+          <div class="premium-card-toggle">+</div>
+        </div>
+        <div class="premium-card-body">
+          <p>
+            The physical world is the ultimate moat against digital disruption. Moravec's Paradox — the observation that what's easy for humans is hard for robots and vice versa — still holds decades after it was first articulated. Dexterous manipulation in unstructured environments, navigating unpredictable terrain, and performing bespoke physical work remain extraordinarily difficult for machines.
+          </p>
+          <p>
+            More importantly, even where robotics <em>can</em> solve a problem, the energy and capital costs often make human labour cheaper for another decade or more. Plumbing in a Victorian-era building. Renovating a listed structure. Operating in a disaster zone. The world is not a factory floor, and that's the human tradesperson's advantage.
+          </p>
+          <div class="premium-examples">
+            <h4>Examples of Enduring Roles</h4>
+            <li>Skilled trades in unstructured environments (plumbing, electrical, renovation)</li>
+            <li>Emergency response and disaster recovery</li>
+            <li>Artisan food production and haute cuisine</li>
+            <li>Wilderness guiding, outdoor instruction, adventure sports</li>
+            <li>Fine handcraft: woodworking, ceramics, tailoring, watchmaking</li>
+          </div>
+        </div>
+      </div>
+
+      <div class="premium-card" data-cat="taste" onclick="toggleCard(this)">
+        <div class="premium-card-header">
+          <div class="premium-card-icon">✦</div>
+          <div class="premium-card-title-block">
+            <div class="premium-card-title">Curated Taste & Vision</div>
+            <div class="premium-card-subtitle">Defining what is worth building</div>
+          </div>
+          <div class="premium-card-toggle">+</div>
+        </div>
+        <div class="premium-card-body">
+          <p>
+            When production cost approaches zero, the scarce resource is <em>knowing what to produce</em>. AI can generate a thousand logo options, write ten business plans, compose a hundred songs — but deciding which one matters, which resonates with the cultural moment, which reflects an authentic point of view — that's taste. And taste is accumulated through lived experience, not training data.
+          </p>
+          <p>
+            The "creative director" archetype becomes the paradigm for human work. Not the person who paints the painting, but the person who commissions it, frames the brief, and knows when it's done. This is already the structure of fashion, film, architecture, and venture capital. It's spreading to every domain.
+          </p>
+          <div class="premium-examples">
+            <h4>Examples of Enduring Roles</h4>
+            <li>Creative direction across all media</li>
+            <li>Product vision and venture selection</li>
+            <li>Cultural curation (museum directors, festival programmers, editors)</li>
+            <li>Brand identity and narrative strategy</li>
+            <li>Urban planning and placemaking</li>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== COMPARISON TABLE ==================== -->
+  <section id="comparison">
+    <div class="section-label">Section 03 — The Value Shift</div>
+    <h2 class="section-title reveal">Cognitive Labour vs.<br>Human Agency</h2>
+    <p class="section-intro reveal">
+      A side-by-side view of what's declining and what's rising. Market value is directional, not precise — the point is the trajectory, not the number.
+    </p>
+
+    <div class="comparison-wrapper reveal">
+      <table class="comparison-table" id="comparisonTable">
+        <thead>
+          <tr>
+            <th>Horizon</th>
+            <th>Declining: Cognitive Labour</th>
+            <th>Value</th>
+            <th>Rising: Human Agency</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2026</td>
+            <td>Data entry, report writing, translation, basic coding, standard design, Tier 1 support</td>
+            <td class="bar-cell">
+              <div class="bar-visual">
+                <div class="bar-track"><div class="bar-fill bar-fill--red" data-width="75"></div></div>
+                <span class="bar-label val-down">75%</span>
+              </div>
+            </td>
+            <td>Prompt engineering, AI tool fluency, data literacy, cross-functional synthesis</td>
+            <td class="bar-cell">
+              <div class="bar-visual">
+                <div class="bar-track"><div class="bar-fill bar-fill--green" data-width="40"></div></div>
+                <span class="bar-label val-up">40%</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>2030</td>
+            <td>Junior legal/medical/finance analysis, mid-level software, project management as information routing</td>
+            <td class="bar-cell">
+              <div class="bar-visual">
+                <div class="bar-track"><div class="bar-fill bar-fill--red" data-width="50"></div></div>
+                <span class="bar-label val-down">50%</span>
+              </div>
+            </td>
+            <td>Multi-agent orchestration, systems thinking, stakeholder navigation, ambiguity tolerance</td>
+            <td class="bar-cell">
+              <div class="bar-visual">
+                <div class="bar-track"><div class="bar-fill bar-fill--green" data-width="60"></div></div>
+                <span class="bar-label val-up">60%</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>2036</td>
+            <td>Most knowledge synthesis, professional diagnostics, routine strategy, standard creative production</td>
+            <td class="bar-cell">
+              <div class="bar-visual">
+                <div class="bar-track"><div class="bar-fill bar-fill--red" data-width="30"></div></div>
+                <span class="bar-label val-down">30%</span>
+              </div>
+            </td>
+            <td>High-stakes judgment, institutional trust-building, physical-world mastery, cultural curation</td>
+            <td class="bar-cell">
+              <div class="bar-visual">
+                <div class="bar-track"><div class="bar-fill bar-fill--green" data-width="75"></div></div>
+                <span class="bar-label val-up">75%</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>2046</td>
+            <td>Nearly all routine cognitive production — writing, analysis, design, code, planning, scheduling</td>
+            <td class="bar-cell">
+              <div class="bar-visual">
+                <div class="bar-track"><div class="bar-fill bar-fill--red" data-width="12"></div></div>
+                <span class="bar-label val-down">12%</span>
+              </div>
+            </td>
+            <td>Governance & accountability, meaning-making, embodied craft, complex human care</td>
+            <td class="bar-cell">
+              <div class="bar-visual">
+                <div class="bar-track"><div class="bar-fill bar-fill--green" data-width="88"></div></div>
+                <span class="bar-label val-up">88%</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>2056</td>
+            <td>Residual: niche artisan cognitive work valued for its human-ness, not its efficiency</td>
+            <td class="bar-cell">
+              <div class="bar-visual">
+                <div class="bar-track"><div class="bar-fill bar-fill--red" data-width="5"></div></div>
+                <span class="bar-label val-down">5%</span>
+              </div>
+            </td>
+            <td>Full human premium: presence, accountability, taste, physical skill, emotional truth, witness</td>
+            <td class="bar-cell">
+              <div class="bar-visual">
+                <div class="bar-track"><div class="bar-fill bar-fill--green" data-width="95"></div></div>
+                <span class="bar-label val-up">95%</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="expert-take reveal">
+      <p>
+        The table above is a simplification, and intentionally so. Real economic transitions are never this clean. What actually happens is that cognitive labour doesn't disappear — it gets reclassified. The person "directing AI agents" is still doing cognitive work; they're just doing it at a higher level of abstraction. The real insight is this: <strong>the floor is rising</strong>. The minimum level of abstraction at which human cognition creates economic value keeps going up. Today you need to think at the level of a paragraph; tomorrow, at the level of a strategy; eventually, at the level of a philosophy. The people who can't ascend that ladder of abstraction are the ones who get squeezed.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== AGENTIC DIRECTION ==================== -->
+  <section id="agentic">
+    <div class="section-label">Section 04 — The Agentic Self</div>
+    <h2 class="section-title reveal">From Worker to<br>Orchestrator of Thousands</h2>
+    <p class="section-intro reveal">
+      The most important career transition of the next decade isn't learning a new skill — it's learning a new identity. Moving from "I do the work" to "I direct the work" requires fundamental psychological rewiring.
+    </p>
+
+    <div class="agentic-traits reveal">
+
+      <div class="trait-item">
+        <div class="trait-number">01</div>
+        <div class="trait-name">Intent Clarity</div>
+        <div class="trait-desc">
+          The ability to specify what you actually want — not the first thing that comes to mind, but the real underlying goal. Most people are shockingly bad at this. They ask for a "website" when they want "credibility." They request a "report" when they need a "decision." Agentic direction starts with rigorous self-interrogation about intent.
+        </div>
+      </div>
+
+      <div class="trait-item">
+        <div class="trait-number">02</div>
+        <div class="trait-name">Systems Cartography</div>
+        <div class="trait-desc">
+          Seeing the whole board. Understanding how changing one variable cascades through a complex system. This isn't "systems thinking" as a buzzword — it's the concrete skill of holding a mental model of 50+ interacting components and predicting second- and third-order effects. The orchestrator doesn't need to know how each agent works; they need to know how the agents affect each other.
+        </div>
+      </div>
+
+      <div class="trait-item">
+        <div class="trait-number">03</div>
+        <div class="trait-name">Philosophical Clarity</div>
+        <div class="trait-desc">
+          When you can generate anything, the question "what should exist?" becomes the only question that matters. This requires a coherent worldview — not rigid ideology, but a developed sense of values, aesthetics, and ethics that can serve as a decision function against infinite options. Philosophy becomes an applied, vocational skill.
+        </div>
+      </div>
+
+      <div class="trait-item">
+        <div class="trait-number">04</div>
+        <div class="trait-name">Comfortable Incompleteness</div>
+        <div class="trait-desc">
+          The ability to act under radical uncertainty, with imperfect information, and be psychologically okay with that. AI provides the illusion of complete information. The orchestrator knows that no amount of data eliminates the fundamental uncertainty of the future, and they can still commit to a direction. This is as much a spiritual capacity as an intellectual one.
+        </div>
+      </div>
+
+      <div class="trait-item">
+        <div class="trait-number">05</div>
+        <div class="trait-name">Feedback-Loop Discipline</div>
+        <div class="trait-desc">
+          The difference between an amateur and a professional orchestrator is iteration speed. Not just launching agents, but watching outcomes, detecting drift, correcting course, and tightening the loop — continuously. This is the operational skill that turns vision into reality. Think of it as "taste applied across time."
+        </div>
+      </div>
+
+      <div class="trait-item">
+        <div class="trait-number">06</div>
+        <div class="trait-name">Social Capital Architecture</div>
+        <div class="trait-desc">
+          AI agents can execute, but they can't build trust. The orchestrator's deepest moat is their network — not in the LinkedIn sense, but in the "this person's word is their bond, and people follow them because they've earned it" sense. Reputation, relationships, and institutional trust become the hardest assets to automate.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="expert-take reveal">
+      <p>
+        I'll be blunt: "prompt engineering" as a standalone skill has about 18 months of premium value left. The interfaces are getting too good, and the models are getting too capable at interpreting vague intent. What <em>doesn't</em> get easier is knowing what to want. The bottleneck is moving upstream from "how do I talk to AI?" to "what am I even trying to achieve with my life and work?" That's not a technical question. It's a philosophical one. The most valuable professionals of 2035 will look more like philosopher-executives than technologists.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== CONTRARIAN SKILLS ==================== -->
+  <section id="contrarian">
+    <div class="section-label">Section 05 — Contrarian Intelligence</div>
+    <h2 class="section-title reveal">Five Skills That Seem Useless<br>Until They're Everything</h2>
+    <p class="section-intro reveal">
+      In a world saturated by synthetic media and automated logic, the highest-value skills are the ones nobody is currently optimising for. These are the arbitrage opportunities of human capital.
+    </p>
+
+    <div class="contrarian-list reveal">
+
+      <div class="contrarian-item">
+        <div class="contrarian-num"></div>
+        <div class="contrarian-content">
+          <h3>Boredom Tolerance</h3>
+          <span class="contrarian-hook">The Ability to Sit With Nothing</span>
+          <p>
+            In an attention economy, the ability to be unstimulated without reaching for input is becoming almost superhuman. Boredom is where original thought lives. Every breakthrough insight in history emerged from someone staring out of a window, not consuming content. As AI floods every channel with engaging material, the person who can sit in silence and let a genuine thought emerge — rather than reacting to synthetic stimulus — possesses a cognitive superpower. This isn't meditation cosplay. It's the discipline of allowing your unconscious mind to process without interference.
+          </p>
+        </div>
+      </div>
+
+      <div class="contrarian-item">
+        <div class="contrarian-num"></div>
+        <div class="contrarian-content">
+          <h3>Deep Philosophy</h3>
+          <span class="contrarian-hook">Applied Ethics at the Speed of Business</span>
+          <p>
+            Philosophy has been treated as an impractical academic pursuit for decades. That era is ending. When you can build anything — when the cost of creation approaches zero — the only remaining question is "should this exist?" Every product decision, every deployment, every business model becomes an ethical choice. People with genuine philosophical training — not just "ethics" as a compliance checkbox, but the ability to reason about competing values, unintended consequences, and the good life — become the most sought-after advisors in every boardroom.
+          </p>
+        </div>
+      </div>
+
+      <div class="contrarian-item">
+        <div class="contrarian-num"></div>
+        <div class="contrarian-content">
+          <h3>Physical Handcraft</h3>
+          <span class="contrarian-hook">The Luxury of the Irreproducible</span>
+          <p>
+            When digital production is free, physical objects made by human hands become the ultimate status symbol and expression of values. This isn't nostalgia — it's economics. A hand-thrown ceramic bowl, a hand-tailored suit, a hand-built piece of furniture carries provenance, imperfection, and story in a way that no 3D-printed or mass-manufactured item ever can. The craftsperson of 2040 isn't competing with factories; they're competing with luxury brands. And they're winning, because authenticity can't be scaled.
+          </p>
+        </div>
+      </div>
+
+      <div class="contrarian-item">
+        <div class="contrarian-num"></div>
+        <div class="contrarian-content">
+          <h3>Narrative Intuition</h3>
+          <span class="contrarian-hook">Feeling the Story Before It Exists</span>
+          <p>
+            AI can write stories. What it cannot do is feel the absence of a story that needs to be told. The great editors, producers, and creative directors share a specific talent: they can sense cultural tension — an unspoken frustration, an unarticulated desire, a shifting mood — and articulate it before anyone else can. This is pattern recognition at a level that transcends data. It requires living inside a culture, being affected by it, and having the narrative instinct to know "this is the story we need right now." That instinct becomes the most valuable asset in media, marketing, and politics.
+          </p>
+        </div>
+      </div>
+
+      <div class="contrarian-item">
+        <div class="contrarian-num"></div>
+        <div class="contrarian-content">
+          <h3>Institutional Memory</h3>
+          <span class="contrarian-hook">The Human Database That Can't Be Queried</span>
+          <p>
+            Organisations are going to discover, painfully, that firing all their experienced staff and replacing them with AI-augmented juniors loses something critical: the tacit knowledge of "we tried that in 2019 and here's what actually happened." AI can search records; it can't carry the political, emotional, and contextual weight of institutional experience. The person who has been present through multiple cycles — who knows not just what happened but <em>what it felt like</em> and <em>why people made the choices they did</em> — becomes an irreplaceable organisational asset. Tenure, counterintuitively, becomes more valuable, not less.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="expert-take reveal">
+      <p>
+        The thread connecting all five of these skills is <strong>temporal depth</strong>. AI is extraordinarily powerful in the present moment — processing what's in front of it right now. Humans have something AI lacks: a felt sense of time passing. We carry our past in our bodies, not just our databases. We experience anticipation, regret, nostalgia, and hope as embodied states, not as computed probabilities. Every "contrarian" skill above is really a different facet of the same underlying advantage: humans are <em>beings in time</em>, and that temporal embodiment is the last moat.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== CLOSING ==================== -->
+  <section>
+    <div class="section-label">Conclusion</div>
+    <h2 class="section-title reveal">The Roadmap, Condensed</h2>
+    <div class="premise-block reveal" style="margin-bottom: 0;">
+      <blockquote>
+        <em>Short term</em> — learn to direct AI, ruthlessly. Master the tools, build the muscle memory of orchestration, and position yourself at the decision layer, not the production layer.<br><br>
+        <em>Medium term</em> — invest in what can't be automated: your judgment, your relationships, your physical skills, your philosophical clarity, and your ability to sit with ambiguity.<br><br>
+        <em>Long term</em> — become someone worth listening to. Not because you know things — knowledge is free — but because you've lived deeply enough to have earned a perspective that matters. The final human premium is <em>character</em>.
+      </blockquote>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>Human Survival Roadmap · Foresight Analysis 2026–2056</p>
+  <p>A framework for navigating the age of commodity intelligence</p>
+</footer>
+
+<script>
+// ===== SCROLL PROGRESS =====
+const progressBar = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  progressBar.style.width = progress + '%';
+});
+
+// ===== SCROLL REVEAL =====
+const revealElements = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+revealElements.forEach(el => revealObserver.observe(el));
+
+// ===== PREMIUM CARDS TOGGLE =====
+function toggleCard(card) {
+  const wasExpanded = card.classList.contains('expanded');
+  document.querySelectorAll('.premium-card').forEach(c => c.classList.remove('expanded'));
+  if (!wasExpanded) card.classList.add('expanded');
+}
+
+// ===== ANIMATED BARS =====
+const barObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const fills = entry.target.querySelectorAll('.bar-fill');
+      fills.forEach(fill => {
+        const width = fill.getAttribute('data-width');
+        fill.style.width = width + '%';
+      });
+    }
+  });
+}, { threshold: 0.3 });
+
+barObserver.observe(document.getElementById('comparisonTable'));
+
+// ===== SMOOTH SCROLL NAV =====
+document.querySelectorAll('nav a').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+
+</body>
+</html>
