@@ -814,6 +814,288 @@
     section { padding: 4rem 0; }
     .timeline { padding-left: 2rem; }
   }
+
+  /* ========== SKILLS MAP ========== */
+  .skills-controls {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .skills-toggle-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+
+  .skills-toggle-group {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .skills-toggle {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5em 1.2em;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .skills-toggle:hover {
+    color: var(--text-primary);
+    border-color: var(--border-active);
+  }
+
+  .skills-toggle.active {
+    background: var(--accent-gold-dim);
+    border-color: rgba(201, 162, 39, 0.4);
+    color: var(--accent-gold);
+  }
+
+  .skills-legend {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-left: auto;
+  }
+
+  .skills-legend-low,
+  .skills-legend-high {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .skills-legend-bar {
+    width: 100px;
+    height: 5px;
+    border-radius: 3px;
+    transition: background 0.5s;
+  }
+
+  .skills-treemap-container {
+    position: relative;
+    width: 100%;
+    height: 520px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+    background: var(--bg-secondary);
+  }
+
+  @media (max-width: 768px) {
+    .skills-treemap-container { height: 380px; }
+    .skills-controls { gap: 1rem; }
+    .skills-legend { margin-left: 0; width: 100%; }
+  }
+
+  .skill-cell {
+    position: absolute;
+    cursor: pointer;
+    border: 2px solid var(--bg-primary);
+    border-radius: 2px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0.6rem 0.7rem;
+    box-sizing: border-box;
+    transition: filter 0.2s, border-color 0.25s;
+  }
+
+  .skill-cell:hover {
+    filter: brightness(1.3);
+    z-index: 10;
+    border-color: rgba(255,255,255,0.25);
+  }
+
+  .skill-cell.selected {
+    border-color: rgba(255,255,255,0.55);
+    filter: brightness(1.35);
+    z-index: 20;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2);
+  }
+
+  .skill-cell-name {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.93);
+    line-height: 1.25;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.55);
+    pointer-events: none;
+  }
+
+  .skill-cell-cat {
+    font-family: var(--font-mono);
+    font-size: 0.48rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 0.2rem;
+    pointer-events: none;
+  }
+
+  .skill-cell-name.sm { font-size: 0.64rem; }
+  .skill-cell-name.xs { font-size: 0.55rem; }
+  .skill-cell.cell-tiny .skill-cell-name,
+  .skill-cell.cell-tiny .skill-cell-cat { display: none; }
+
+  .skills-detail {
+    background: var(--bg-card);
+    border: 1px solid var(--border-active);
+    border-radius: 8px;
+    padding: 2rem 2.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    opacity: 0;
+    animation: fadeUp 0.4s var(--ease-out) forwards;
+  }
+
+  .skills-detail-close {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 1.3rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+    font-family: var(--font-mono);
+  }
+
+  .skills-detail-close:hover { color: var(--text-primary); }
+
+  .skills-detail-top {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  @media (max-width: 768px) {
+    .skills-detail-top { grid-template-columns: 1fr; }
+    .skills-detail { padding: 1.5rem; }
+  }
+
+  .skills-detail-category {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .skills-detail-name {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-weight: 400;
+  }
+
+  .skills-detail-desc {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.85;
+    font-weight: 300;
+  }
+
+  .skills-detail-scores {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    min-width: 240px;
+  }
+
+  .skills-score-item {
+    display: grid;
+    grid-template-columns: 130px 1fr 36px;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .skills-score-label {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+
+  .skills-score-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .skills-score-fill {
+    height: 100%;
+    width: 0;
+    border-radius: 2px;
+    transition: width 0.9s var(--ease-out);
+  }
+
+  .skills-score-fill--resistance { background: linear-gradient(90deg, var(--accent-red), var(--accent-green)); }
+  .skills-score-fill--demand { background: linear-gradient(90deg, #3a3a40, var(--accent-gold)); }
+  .skills-score-fill--rarity { background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)); }
+
+  .skills-score-val {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--text-secondary);
+    text-align: right;
+  }
+
+  .skills-category-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(42,42,53,0.4);
+  }
+
+  .skills-cat-dot {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .skills-cat-swatch {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+
+  .skills-cat-label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
 </style>
 </head>
 <body>
@@ -829,6 +1111,7 @@
     <li><a href="#comparison">Value Shift</a></li>
     <li><a href="#agentic">Agentic Self</a></li>
     <li><a href="#contrarian">Contrarian</a></li>
+    <li><a href="#skills">Skills Map</a></li>
   </ul>
 </nav>
 
@@ -1346,6 +1629,72 @@
     </div>
   </section>
 
+  <!-- ==================== SKILLS MAP ==================== -->
+  <section id="skills">
+    <div class="section-label">Section 06 — Skills Intelligence</div>
+    <h2 class="section-title reveal">The Human Skills<br>Landscape</h2>
+    <p class="section-intro reveal">
+      Every rectangle is a survival skill. Area reflects its overall human premium value. Toggle the colouring to see how each skill scores across three dimensions — then click any tile to explore it in depth.
+    </p>
+
+    <div class="skills-controls reveal">
+      <div class="skills-toggle-label">Colour by</div>
+      <div class="skills-toggle-group">
+        <button class="skills-toggle active" data-mode="resistance">AI Resistance</button>
+        <button class="skills-toggle" data-mode="demand">Demand Growth</button>
+        <button class="skills-toggle" data-mode="rarity">Rarity</button>
+      </div>
+      <div class="skills-legend">
+        <span class="skills-legend-low">Low</span>
+        <div class="skills-legend-bar" id="legendBar"></div>
+        <span class="skills-legend-high">High</span>
+      </div>
+    </div>
+
+    <div class="skills-treemap-container reveal" id="skillsTreemap"></div>
+
+    <div class="skills-category-legend reveal">
+      <div class="skills-cat-dot"><div class="skills-cat-swatch" style="background:#c9a227"></div><span class="skills-cat-label">Orchestration</span></div>
+      <div class="skills-cat-dot"><div class="skills-cat-swatch" style="background:#4b7cc4"></div><span class="skills-cat-label">Human Premium</span></div>
+      <div class="skills-cat-dot"><div class="skills-cat-swatch" style="background:#c44b4b"></div><span class="skills-cat-label">Existential</span></div>
+      <div class="skills-cat-dot"><div class="skills-cat-swatch" style="background:#8b6cc4"></div><span class="skills-cat-label">Contrarian</span></div>
+    </div>
+
+    <div class="skills-detail" id="skillsDetail" style="display:none;">
+      <button class="skills-detail-close" onclick="closeSkillDetail()">×</button>
+      <div class="skills-detail-top">
+        <div>
+          <div class="skills-detail-category" id="sdCategory"></div>
+          <div class="skills-detail-name" id="sdName"></div>
+          <div class="skills-detail-desc" id="sdDesc"></div>
+        </div>
+        <div class="skills-detail-scores">
+          <div class="skills-score-item">
+            <div class="skills-score-label">AI Resistance</div>
+            <div class="skills-score-bar"><div class="skills-score-fill skills-score-fill--resistance" id="sdResistance"></div></div>
+            <div class="skills-score-val" id="sdResistanceVal"></div>
+          </div>
+          <div class="skills-score-item">
+            <div class="skills-score-label">Demand Growth</div>
+            <div class="skills-score-bar"><div class="skills-score-fill skills-score-fill--demand" id="sdDemand"></div></div>
+            <div class="skills-score-val" id="sdDemandVal"></div>
+          </div>
+          <div class="skills-score-item">
+            <div class="skills-score-label">Rarity</div>
+            <div class="skills-score-bar"><div class="skills-score-fill skills-score-fill--rarity" id="sdRarity"></div></div>
+            <div class="skills-score-val" id="sdRarityVal"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="expert-take reveal">
+      <p>
+        The map above is deliberately uncomfortable. Notice that the most AI-resistant skills — boredom tolerance, physical craft, deep care — are exactly the ones our current systems optimise <em>against</em>. We built an economy that rewards fast information processing and penalises slow embodied knowing. The transition will require unlearning before relearning. The most valuable portfolio of 2035 isn't a list of tools mastered. It's a pattern of living that makes you hard to replace.
+      </p>
+    </div>
+  </section>
+
   <!-- ==================== CLOSING ==================== -->
   <section>
     <div class="section-label">Conclusion</div>
@@ -1418,7 +1767,157 @@ document.querySelectorAll('nav a').forEach(link => {
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
-</script>
+// ===== SKILLS TREEMAP =====
+const skillsData = [
+  { id: 'direction',    name: 'Strategic Direction',      category: 'Orchestration',  area: 95, aiResistance: 9,  demandGrowth: 10, rarity: 8,  desc: 'Setting intent and purpose for AI agents. The ability to define "what should exist" rather than "how to produce it." In a world of infinite production capacity, direction is the only bottleneck left.' },
+  { id: 'discernment',  name: 'High-Stakes Discernment',  category: 'Human Premium',  area: 92, aiResistance: 10, demandGrowth: 9,  rarity: 9,  desc: 'Decision-making where the cost of being wrong is catastrophic. Requires skin in the game. AI can model risk beautifully — it cannot bear it. The demand for named, accountable humans at the apex of every high-stakes chain is structurally permanent.' },
+  { id: 'meaning',      name: 'Meaning-Making',           category: 'Existential',    area: 90, aiResistance: 9,  demandGrowth: 10, rarity: 7,  desc: 'Helping humans find purpose in a post-scarcity world. As production becomes free, the economy of meaning becomes the primary industry. Spiritual guides, great teachers, and wise mentors become the most economically significant figures.' },
+  { id: 'network',      name: 'Social Capital',           category: 'Orchestration',  area: 85, aiResistance: 9,  demandGrowth: 9,  rarity: 8,  desc: 'Building trust that cannot be automated. Not LinkedIn connections — the "their word is their bond" kind of reputation, earned over years of consistent judgment. Becomes the deepest moat as every technical advantage commoditises.' },
+  { id: 'empathy',      name: 'Deep Empathy',             category: 'Human Premium',  area: 85, aiResistance: 9,  demandGrowth: 8,  rarity: 6,  desc: 'Genuine emotional attunement that builds irreplaceable trust. Not simulated care, but witnessed humanity — being truly affected by another person. The felt sense of being seen by someone with a life of their own.' },
+  { id: 'taste',        name: 'Aesthetic Taste',          category: 'Orchestration',  area: 82, aiResistance: 8,  demandGrowth: 9,  rarity: 9,  desc: 'The curator\'s eye — knowing good from great when both can be generated instantly. Taste is the filter that makes infinite generation meaningful. In 2035, the person with taste directs a studio; the person without it is buried in noise.' },
+  { id: 'leadership',   name: 'Crisis Leadership',        category: 'Human Premium',  area: 80, aiResistance: 9,  demandGrowth: 8,  rarity: 9,  desc: 'Staying coherent, decisive, and inspiring under conditions of radical uncertainty and irreversible stakes. AI can model crisis scenarios in advance; it cannot stand in a room and hold people together when the model was wrong.' },
+  { id: 'ethics',       name: 'Governance & Ethics',      category: 'Existential',    area: 80, aiResistance: 10, demandGrowth: 9,  rarity: 8,  desc: 'Deciding what AI should and shouldn\'t do. The ultimate leverage point in the new economy. Every deployment is an ethical choice, and the people who can reason rigorously about those choices become the most consequential professionals alive.' },
+  { id: 'philosophy',   name: 'Applied Philosophy',       category: 'Contrarian',     area: 75, aiResistance: 8,  demandGrowth: 10, rarity: 9,  desc: 'Reasoning about competing values, unintended consequences, and what should exist. Not academic theory — philosophy as live, applied practice in boardrooms and policy rooms. The question "should this exist?" becomes the most important question in every industry.' },
+  { id: 'embodiment',   name: 'Physical Presence',        category: 'Human Premium',  area: 75, aiResistance: 10, demandGrowth: 7,  rarity: 5,  desc: 'Being physically there. The irreducible value of a human body in space — in surgery, in leadership, in caregiving, in ceremony. Cannot be streamed. Cannot be delegated to an agent. Presence becomes a premium category precisely because it is genuinely scarce.' },
+  { id: 'feedback',     name: 'Feedback-Loop Discipline', category: 'Orchestration',  area: 70, aiResistance: 7,  demandGrowth: 9,  rarity: 7,  desc: 'Watching outcomes, detecting drift, and iterating faster than competitors. The operational skill that turns vision into reality. Not just launching agents but maintaining taste applied across time — the difference between an amateur and a professional orchestrator.' },
+  { id: 'narrative',    name: 'Narrative Intuition',      category: 'Contrarian',     area: 70, aiResistance: 8,  demandGrowth: 9,  rarity: 9,  desc: 'Sensing cultural tension before it becomes data. Feeling the story that needs to be told before anyone can articulate the need. Pattern recognition at a level that transcends data — it requires living inside a culture and being genuinely affected by it.' },
+  { id: 'accountability', name: 'Accountability',         category: 'Human Premium',  area: 70, aiResistance: 10, demandGrowth: 8,  rarity: 7,  desc: 'Being the named human who faces consequences. Not because AI can\'t decide — but because someone must answer. Civilisation structurally requires accountable agents. Every high-stakes chain terminates in a person. That person becomes indispensable.' },
+  { id: 'synthesis',    name: 'Cross-Domain Synthesis',   category: 'Orchestration',  area: 65, aiResistance: 7,  demandGrowth: 8,  rarity: 8,  desc: 'Connecting concepts across disparate fields to generate novel insights that no specialist ever sees. As AI enables deep expertise everywhere, the scarce resource becomes the person who can translate between worlds and find the unexpected connection.' },
+  { id: 'handcraft',    name: 'Physical Handcraft',       category: 'Contrarian',     area: 65, aiResistance: 10, demandGrowth: 7,  rarity: 7,  desc: 'The luxury of the irreproducible. Human-made objects carry provenance, imperfection, and story that no manufactured item can replicate. The craftsperson of 2040 isn\'t competing with factories — they\'re competing with luxury brands. And winning, because authenticity cannot be scaled.' },
+  { id: 'care',         name: 'Caregiving',               category: 'Existential',    area: 70, aiResistance: 9,  demandGrowth: 8,  rarity: 5,  desc: 'Human care for humans. The most fundamental and enduring form of value exchange. It matters precisely because the caregiver is genuinely affected by the outcome — they have something to lose. That stakes-laden attention cannot be replicated by a system optimising for care-like behaviour.' },
+  { id: 'memory',       name: 'Institutional Memory',     category: 'Contrarian',     area: 60, aiResistance: 8,  demandGrowth: 7,  rarity: 8,  desc: 'The tacit knowledge of "we tried that in 2019 and here\'s what actually happened." AI can search records; it can\'t carry the political, emotional, and contextual weight of experience that was lived rather than logged. Tenure becomes more valuable, not less.' },
+  { id: 'boredom',      name: 'Boredom Tolerance',        category: 'Contrarian',     area: 55, aiResistance: 10, demandGrowth: 8,  rarity: 9,  desc: 'The ability to sit with nothing. In an attention economy flooded with synthetic stimulus, the capacity for unstimulated thought becomes almost superhuman. Boredom is where original thought lives. Every breakthrough emerged from someone staring out of a window, not consuming content.' },
+  { id: 'mentorship',   name: 'Mentorship',               category: 'Existential',    area: 65, aiResistance: 8,  demandGrowth: 8,  rarity: 6,  desc: 'Transmitting earned wisdom through relationship. The human database that can\'t be queried — experience lived, not information processed. As AI makes knowledge free, the value migrates entirely to the contextual wisdom of how to apply it in a specific, messy, human life.' },
+];
 
-</body>
-</html>
+const modeConfig = {
+  resistance: { key: 'aiResistance', low: '#7a2a2a', high: '#2a7a4a', label: 'AI Resistance' },
+  demand:     { key: 'demandGrowth', low: '#2a2a35', high: '#c9a227', label: 'Demand Growth' },
+  rarity:     { key: 'rarity',       low: '#2a4a7a', high: '#6a3ca0', label: 'Rarity' },
+};
+
+let currentMode = 'resistance';
+let selectedSkillId = null;
+
+function lerpHex(hex1, hex2, t) {
+  const p = h => [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)];
+  const [r1,g1,b1] = p(hex1), [r2,g2,b2] = p(hex2);
+  return `rgb(${Math.round(r1+(r2-r1)*t)},${Math.round(g1+(g2-g1)*t)},${Math.round(b1+(b2-b1)*t)})`;
+}
+
+function getSkillColor(skill, mode) {
+  const cfg = modeConfig[mode];
+  return lerpHex(cfg.low, cfg.high, skill[cfg.key] / 10);
+}
+
+// Squarified treemap
+function worstRatio(row, rowLen) {
+  const area = row.reduce((s, d) => s + d._sa, 0);
+  const t = area / rowLen;
+  if (t === 0) return Infinity;
+  return Math.max(...row.map(d => { const l = d._sa / t; return l ? Math.max(t/l, l/t) : Infinity; }));
+}
+
+function squarify(items, x, y, w, h, result = []) {
+  if (!items.length) return result;
+  const isH = w >= h;
+  const rl = isH ? h : w;
+  let row = [], rem = [...items];
+  while (rem.length) {
+    const cand = [...row, rem[0]];
+    if (!row.length || worstRatio(cand, rl) <= worstRatio(row, rl)) { row.push(rem.shift()); } else break;
+  }
+  const ra = row.reduce((s, d) => s + d._sa, 0);
+  const th = ra / rl;
+  let pos = isH ? y : x;
+  for (const item of row) {
+    const len = item._sa / th;
+    result.push({ ...item, rx: isH ? x : pos, ry: isH ? pos : y, rw: isH ? th : len, rh: isH ? len : th });
+    pos += len;
+  }
+  if (rem.length) {
+    isH ? squarify(rem, x+th, y, w-th, h, result) : squarify(rem, x, y+th, w, h-th, result);
+  }
+  return result;
+}
+
+function renderSkillsTreemap(mode) {
+  const container = document.getElementById('skillsTreemap');
+  const W = container.offsetWidth, H = container.offsetHeight;
+  if (!W || !H) return;
+
+  const total = skillsData.reduce((s, d) => s + d.area, 0);
+  const scale = (W * H) / total;
+  const sorted = [...skillsData].sort((a, b) => b.area - a.area).map(d => ({ ...d, _sa: d.area * scale }));
+  const cells = squarify(sorted, 0, 0, W, H);
+
+  container.innerHTML = '';
+  for (const cell of cells) {
+    if (cell.rw < 3 || cell.rh < 3) continue;
+    const div = document.createElement('div');
+    div.className = 'skill-cell' + (selectedSkillId === cell.id ? ' selected' : '') + (cell.rw < 55 || cell.rh < 35 ? ' cell-tiny' : '');
+    div.style.cssText = `left:${cell.rx}px;top:${cell.ry}px;width:${cell.rw}px;height:${cell.rh}px;background-color:${getSkillColor(cell, mode)}`;
+
+    const cat = document.createElement('div');
+    cat.className = 'skill-cell-cat';
+    cat.textContent = cell.category;
+
+    const name = document.createElement('div');
+    name.className = 'skill-cell-name' + (cell.rw < 80 || cell.rh < 50 ? ' xs' : cell.rw < 110 || cell.rh < 65 ? ' sm' : '');
+    name.textContent = cell.name;
+
+    div.append(cat, name);
+    div.addEventListener('click', () => openSkillDetail(cell));
+    container.appendChild(div);
+  }
+
+  // Legend gradient
+  const cfg = modeConfig[mode];
+  document.getElementById('legendBar').style.background = `linear-gradient(to right,${cfg.low},${cfg.high})`;
+}
+
+function openSkillDetail(skill) {
+  selectedSkillId = skill.id;
+  renderSkillsTreemap(currentMode);
+
+  document.getElementById('sdCategory').textContent = skill.category;
+  document.getElementById('sdName').textContent = skill.name;
+  document.getElementById('sdDesc').textContent = skill.desc;
+
+  const detail = document.getElementById('skillsDetail');
+  detail.style.display = 'block';
+  // Reset bars then animate
+  ['sdResistance','sdDemand','sdRarity'].forEach(id => document.getElementById(id).style.width = '0');
+  setTimeout(() => {
+    document.getElementById('sdResistance').style.width = (skill.aiResistance * 10) + '%';
+    document.getElementById('sdResistanceVal').textContent = skill.aiResistance + '/10';
+    document.getElementById('sdDemand').style.width = (skill.demandGrowth * 10) + '%';
+    document.getElementById('sdDemandVal').textContent = skill.demandGrowth + '/10';
+    document.getElementById('sdRarity').style.width = (skill.rarity * 10) + '%';
+    document.getElementById('sdRarityVal').textContent = skill.rarity + '/10';
+  }, 60);
+
+  detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function closeSkillDetail() {
+  selectedSkillId = null;
+  document.getElementById('skillsDetail').style.display = 'none';
+  renderSkillsTreemap(currentMode);
+}
+
+document.querySelectorAll('.skills-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.skills-toggle').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentMode = btn.dataset.mode;
+    renderSkillsTreemap(currentMode);
+  });
+});
+
+window.addEventListener('load', () => {
+  renderSkillsTreemap(currentMode);
+  let rt;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => renderSkillsTreemap(currentMode), 150); });
+});
+</script>
